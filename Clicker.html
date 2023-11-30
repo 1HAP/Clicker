@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie Clicker</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    #cookie {
+      width: 200px;
+      height: 200px;
+      margin: 50px;
+      cursor: pointer;
+    }
+
+    #score {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    #upgrade, #autoClicker, #superAutoClicker {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Cookie Clicker</h1>
+  <img id="cookie" src="beautiful_cookie_image.png" alt="Beautiful Cookie" onclick="clickCookie()">
+  <p id="score">Cookies: <span id="cookieCount">0</span></p>
+  <button id="upgrade" onclick="buyUpgrade()">Buy Upgrade (Cost: <span id="upgradeCost">10</span> cookies)</button>
+  <button id="autoClicker" onclick="buyAutoClicker()">Buy AutoClicker (Cost: <span id="autoClickerCost">50</span> cookies)</button>
+  <button id="superAutoClicker" onclick="buySuperAutoClicker()">Buy Super AutoClicker (Cost: <span id="superAutoClickerCost">200</span> cookies)</button>
+
+  <p>Upgrades:</p>
+  <p>Upgrade Multiplier (x2): <span id="upgradeCount">0</span></p>
+  <p>AutoClickers: <span id="autoClickerCount">0</span></p>
+  <p>Super AutoClickers: <span id="superAutoClickerCount">0</span></p>
+
+  <script>
+    // Variables
+    let cookies = 0;
+    let clickValue = 1;
+    let upgradeCost = 10;
+    let upgradeCount = 0;
+    let autoClickerCost = 50;
+    let autoClickerCount = 0;
+    let superAutoClickerCost = 200;
+    let superAutoClickerCount = 0;
+    let autoClickerInterval;
+    let superAutoClickerInterval;
+
+    // Functions
+    function clickCookie() {
+      cookies += clickValue;
+      updateScore();
+    }
+
+    function buyUpgrade() {
+      if (cookies >= upgradeCost) {
+        cookies -= upgradeCost;
+        clickValue *= 2; // Double click value
+        upgradeCount++;
+        upgradeCost *= 2; // Double upgrade cost
+        updateScore();
+      } else {
+        alert("Not enough cookies to buy the upgrade!");
+      }
+    }
+
+    function buyAutoClicker() {
+      if (cookies >= autoClickerCost) {
+        cookies -= autoClickerCost;
+        autoClickerCount++;
+        autoClickerInterval = setInterval(function() {
+          cookies += 1;
+          updateScore();
+        }, 1000); // Increment cookies every 1000 milliseconds (1 second)
+        autoClickerCost *= 2; // Double autoClicker cost
+        updateScore();
+      } else {
+        alert("Not enough cookies to buy the AutoClicker!");
+      }
+    }
+
+    function buySuperAutoClicker() {
+      if (cookies >= superAutoClickerCost) {
+        cookies -= superAutoClickerCost;
+        superAutoClickerCount++;
+        superAutoClickerInterval = setInterval(function() {
+          cookies += 10;
+          updateScore();
+        }, 1000); // Increment cookies every 1000 milliseconds (1 second)
+        superAutoClickerCost *= 2; // Double superAutoClicker cost
+        updateScore();
+      } else {
+        alert("Not enough cookies to buy the Super AutoClicker!");
+      }
+    }
+
+    function updateScore() {
+      document.getElementById('cookieCount').innerText = cookies;
+      document.getElementById('upgrade').innerText = 'Buy Upgrade (Cost: ' + upgradeCost + ' cookies)';
+      document.getElementById('autoClicker').innerText = 'Buy AutoClicker (Cost: ' + autoClickerCost + ' cookies)';
+      document.getElementById('superAutoClicker').innerText = 'Buy Super AutoClicker (Cost: ' + superAutoClickerCost + ' cookies)';
+      document.getElementById('upgradeCount').innerText = upgradeCount;
+      document.getElementById('autoClickerCount').innerText = autoClickerCount;
+      document.getElementById('superAutoClickerCount').innerText = superAutoClickerCount;
+    }
+  </script>
+
+</body>
+</html>
